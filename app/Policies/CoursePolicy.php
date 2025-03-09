@@ -39,7 +39,7 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): Response
     {
-        return $user->user_id === $course->teacher_id
+        return $user->id === $course->teacher_id
         ? Response::allow()
         : Response::deny('You do not own this post');
     }
@@ -48,7 +48,7 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course): Response
     {
-        return $user->user_id === $course->teacher_id
+        return $user->id === $course->teacher_id
             ? Response::allow()
             : Response::deny('You do not own this course.');
     }    

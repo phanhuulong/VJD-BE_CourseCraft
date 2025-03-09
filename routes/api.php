@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/comments/{courseId}', [CommentController::class, 'index']);
+    Route::post('/comments', [CommentController::class, 'store']);
+});
 
 Route::get('/courses/teacher/{teacher_id}', [CourseController::class, 'getCoursesByTeacher']);
 Route::get('/courses/except-own', [CourseController::class, 'getCoursesExceptOwn'])->middleware('auth:sanctum');
